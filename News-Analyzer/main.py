@@ -22,18 +22,20 @@ def is_valid_headline(headline):
 def format_headlines(headlines, start_number=1):
     formatted_output = ""
     valid_count = 0
+    seen_headlines = set()  # Track seen headlines to avoid duplicates
 
-    for idx, headline in enumerate(headlines, start=start_number):
-        if is_valid_headline(headline):
+    for i, headline in enumerate(headlines, start=start_number):
+        if is_valid_headline(headline) and headline not in seen_headlines:
+            seen_headlines.add(headline)
             valid_count += 1
             formatted_output += f"{valid_count}. {headline}\n"
 
-    return formatted_output.strip()  # Remove any trailing newline
+    return formatted_output.strip()  
 
 # Scrape headlines from the site
 headline_list = scrape_news(news_url)
 
-# Format headlines starting from a specific number (e.g., 1)
+# Format headlines starting from a specific number 
 formatted_headlines = format_headlines(headline_list)
 
 # Print the formatted headlines
